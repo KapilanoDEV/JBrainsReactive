@@ -31,24 +31,28 @@ public class Exercise1 {
         //  Print the first number in intNumbersStream that's greater than 5.
         //  If nothing is found, print -1
         // TODO: Write code here
-        Integer value = StreamSources.intNumbersStream().filter(num -> num.intValue() > 18)
-                .findFirst()
-                .orElse(-1);
-
-        System.out.println(value);
+//        Integer value = StreamSources.intNumbersStream().filter(num -> num.intValue() > 18)
+//                .findFirst()
+//                .orElse(-1);
+//
+//        System.out.println(value);
 
         // Print first names of all users in userStream
         // TODO: Write code here
 //        StreamSources.userStream().forEach(user -> System.out.println(user.getFirstName()));
-        StreamSources.userStream()
-                .map(user -> user.getFirstName())
-                .forEach(firstName -> System.out.println(firstName));
+//        StreamSources.userStream()
+//                .map(user -> user.getFirstName())
+//                .forEach(firstName -> System.out.println(firstName));
 
         // Print first names in userStream for users that have IDs from number stream
         // TODO: Write code here
         StreamSources.intNumbersStream()
-                .map(id -> StreamSources.userStream()
-                .filter(user -> user.getId() == id))
+                .flatMap(id -> StreamSources.userStream().filter(user -> user.getId()==id))
+                        .forEach(value1 -> System.out.println(value1));
+
+        StreamSources.userStream()
+                .filter(user -> StreamSources.intNumbersStream().anyMatch(integer -> integer == user.getId()))
+                .forEach(System.out::println);
 
     }
 
